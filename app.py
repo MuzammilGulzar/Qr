@@ -5,8 +5,8 @@ import requests
 
 app = Flask(__name__)
 
-# Google Drive URLs (keep your existing ones)
-DIRECT_IMAGE_URL = "https://drive.usercontent.google.com/download?id=1DXvqYoBOED810kv0r_vK8VvRVRJSFV7y"
+# Google Drive URLs (keep your existing ones)# NEW (works):
+DIRECT_IMAGE_URL = "https://drive.google.com/thumbnail?id=1DXvqYoBOED810kv0r_vK8VvRVRJSFV7y&sz=w1000"
 DIRECT_TEXT_FILE_URL = "https://docs.google.com/document/d/1y7NdAFc6OySVu5CIbKF7WyCOaAh44D89/export?format=txt"
 
 DEFAULT_TEXT_CONTENT = "Default text: No custom text file found or loaded."
