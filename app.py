@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 
 # Google Drive URLs (keep your existing ones)# NEW (works):
-DIRECT_IMAGE_URL = "https://drive.google.com/thumbnail?id=1DXvqYoBOED810kv0r_vK8VvRVRJSFV7y&sz=w1000"
+DIRECT_IMAGE_URL = "https://drive.google.com/file/d/1BtB5fu6TaRsr_9nhqJwdWH1vev1qL7fh/view?usp=drive_link"
 DIRECT_TEXT_FILE_URL = "https://docs.google.com/document/d/1y7NdAFc6OySVu5CIbKF7WyCOaAh44D89/export?format=txt"
 
 DEFAULT_TEXT_CONTENT = "Default text: No custom text file found or loaded."
@@ -47,36 +47,8 @@ def generate_qr():
 
 @app.route('/')
 def index():
-    return '''
-    <!doctype html>
-    <html>
-    <head>
-        <title>QR Code Generator</title>
-        <style>
-            body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; }
-            img.qr-display { max-width: 300px; height: auto; border: 1px solid #ddd; padding: 10px; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-            p { color: #555; }
-            h1 { color: #333; }
-            .note { margin-top: 20px; font-style: italic; color: #777; font-size: 0.9em; max-width: 600px; margin: 20px auto; }
-        </style>
-    </head>
-    <body>
-        <h1>Scan this QR Code</h1>
-        <img class="qr-display" src="/generate_qr" alt="QR Code">
-        <p>This QR code links to a page with custom content fetched from Google Drive.</p>
-        <div class="note">
-            <p><strong>Important:</strong> Make sure your Google Drive files are shared with "Anyone with the link".</p>
-        </div>
-    </body>
-    </html>
-    '''
-
-
-@app.route('/content')
-def display_content():
     custom_text = fetch_text_content(DIRECT_TEXT_FILE_URL)
     formatted_text = custom_text.replace('\n', '<br>')
-
     return render_template_string(f'''
     <!doctype html>
     <html>
@@ -99,6 +71,33 @@ def display_content():
         <footer>
             <p>Content fetched from Google Drive.</p>
         </footer>
+    </body>
+    </html>
+    ''')
+
+
+@app.route('/content')
+def display_content():
+    return '''
+    <!doctype html>
+    <html>
+    <head>
+        <title>QR Code Generator</title>
+        <style>
+            body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; }
+            img.qr-display { max-width: 300px; height: auto; border: 1px solid #ddd; padding: 10px; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            p { color: #555; }
+            h1 { color: #333; }
+            .note { margin-top: 20px; font-style: italic; color: #777; font-size: 0.9em; max-width: 600px; margin: 20px auto; }
+        </style>
+    </head>
+    <body>
+        <h1>Scan this QR Code</h1>
+        <img class="qr-display" src="/generate_qr" alt="QR Code">
+        <p>This QR code links to a page with custom content fetched from Google Drive.</p>
+        <div class="note">
+            <p><strong>Important:</strong> Make sure your Google Drive files are shared with "Anyone with the link".</p>
+        </div>
     </body>
     </html>
     ''')
